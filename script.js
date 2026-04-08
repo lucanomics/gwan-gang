@@ -52,36 +52,86 @@ const db = {
 
 const navContainer = document.getElementById('category-nav');
 const cardContainer = document.getElementById('card-container');
+const searchInput = document.getElementById('search-input');
+let activeCategory = "공통 안내";
 
+// TTS 재생 기능
 function speak(text) {
     if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel(); 
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'zh-CN'; 
+        utterance.rate = 0.9; 
         window.speechSynthesis.speak(utterance);
     } else {
         alert("이 브라우저에서는 음성 재생을 지원하지 않습니다.");
     }
 }
 
+// 단일 카드 생성 함수
+function createCard(item) {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+        <div>
+            <div class="ko-text">${item.ko}</div>
+            <div class="cn-text">${item.cn}</div>
+            <div class="py-text">${item.py}</div>
+        </div>
+        <button class="tts-btn" onclick="speak('${item.cn}')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+            발음 듣기
+        </button>
+    `;
+    cardContainer.appendChild(card);
+}
+
+// 선택된 카테고리 렌더링
 function renderCards(category) {
     cardContainer.innerHTML = '';
     const items = db[category];
-    
-    items.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-            <div>
-                <div class="ko-text">${item.ko}</div>
-                <div class="cn-text">${item.cn}</div>
-                <div class="py-text">${item.py}</div>
-            </div>
-            <button class="tts-btn" onclick="speak('${item.cn}')">🔊 발음 듣기</button>
-        `;
-        cardContainer.appendChild(card);
-    });
+    items.forEach(item => createCard(item));
 }
 
+// 검색 기능 로직
+searchInput.addEventListener('input', (e) => {
+    const term = e.target.value.toLowerCase().trim();
+    cardContainer.innerHTML = '';
+    
+    // 검색어가 없으면 현재 활성화된 카테고리로 복구
+    if (!term) {
+        renderCards(activeCategory);
+        document.querySelectorAll('.cat-btn').forEach(btn => {
+            if(btn.textContent === activeCategory) btn.classList.add('active');
+        });
+        return;
+    }
+
+    // 검색 시 모든 버튼 선택 해제
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+
+    // DB 전체에서 검색어 포함 객체 필터링 (한국어, 병음, 한자)
+    const allItems = Object.values(db).flat();
+    const results = allItems.filter(item => 
+        item.ko.includes(term) || 
+        item.py.toLowerCase().includes(term) || 
+        item.cn.includes(term)
+    );
+
+    // 중복 제거 후 렌더링
+    const uniqueResults = Array.from(new Set(results.map(a => a.ko)))
+        .map(ko => {
+            return results.find(a => a.ko === ko)
+        });
+
+    if (uniqueResults.length === 0) {
+        cardContainer.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #6c757d; padding: 40px 0;">검색 결과가 없습니다.</div>';
+    } else {
+        uniqueResults.forEach(item => createCard(item));
+    }
+});
+
+// 초기화
 function init() {
     const categories = Object.keys(db);
     categories.forEach((cat, index) => {
@@ -91,6 +141,9 @@ function init() {
         if (index === 0) btn.classList.add('active');
         
         btn.onclick = () => {
+            // 검색창 초기화
+            searchInput.value = '';
+            activeCategory = cat;
             document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             renderCards(cat);
@@ -101,4 +154,4 @@ function init() {
     renderCards(categories[0]);
 }
 
-init();
+document.addEventListener('DOMContentLoaded', init);
