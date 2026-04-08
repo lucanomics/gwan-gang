@@ -1,174 +1,188 @@
 :root {
-    --bg-color: #f8fafc;
+    --bg-color: #f4f7f6;
     --card-bg: #ffffff;
-    --primary: #2563eb;
-    --primary-hover: #1d4ed8;
-    --text-main: #0f172a;
+    --primary: #3b82f6;
+    --primary-hover: #2563eb;
+    --sidebar-bg: #ffffff;
+    --text-main: #1e293b;
     --text-muted: #64748b;
     --border: #e2e8f0;
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+    --shadow-hover: 0 10px 15px -3px rgba(0,0,0,0.1);
 }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
     font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
     background-color: var(--bg-color);
     color: var(--text-main);
     line-height: 1.5;
-    padding-top: 140px; /* 고정 헤더 공간 확보 */
+    padding-top: 130px; 
 }
 
-/* 글래스모피즘 상단 헤더 */
+/* 상단 고정 헤더 */
 .glass-header {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    top: 0; left: 0; width: 100%;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border);
     z-index: 1000;
-    padding: 20px 0;
+    padding: 15px 0;
 }
 
 .header-content {
-    max-width: 900px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 12px;
 }
 
 h1 {
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 700;
-    letter-spacing: -0.5px;
-    text-align: center;
+    color: var(--primary);
 }
 
 .search-box input {
     width: 100%;
-    padding: 14px 20px;
-    border-radius: 9999px;
+    padding: 12px 18px;
+    border-radius: 8px;
     border: 1px solid var(--border);
-    background-color: var(--bg-color);
+    background-color: #f8fafc;
     font-family: inherit;
     font-size: 15px;
     outline: none;
     transition: all 0.2s;
-    box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.02);
 }
 
 .search-box input:focus {
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
     background-color: white;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
 }
 
-.container {
-    max-width: 900px;
+/* 전체 레이아웃 (사이드바 + 메인) */
+.app-layout {
+    max-width: 1200px;
     margin: 0 auto;
+    display: flex;
+    gap: 30px;
     padding: 0 20px 40px;
+    align-items: flex-start;
+}
+
+/* 사이드바 영역 */
+.sidebar {
+    flex: 0 0 220px;
+    background: var(--sidebar-bg);
+    border-radius: 12px;
+    padding: 15px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 150px; /* 스크롤 시 상단 고정 */
+    max-height: calc(100vh - 170px);
+    overflow-y: auto;
 }
 
 #category-nav {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 30px;
-    justify-content: center;
+    flex-direction: column;
+    gap: 6px;
 }
 
 .cat-btn {
-    padding: 10px 20px;
-    border: 1px solid transparent;
-    border-radius: 9999px;
-    background-color: white;
+    padding: 10px 14px;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
     color: var(--text-muted);
     font-size: 14px;
     font-weight: 600;
+    text-align: left;
     cursor: pointer;
-    box-shadow: var(--shadow-sm);
-    transition: all 0.2s ease;
+    transition: all 0.2s;
 }
 
-.cat-btn.active, .cat-btn:hover {
-    background-color: var(--text-main);
+.cat-btn:hover { background-color: #f1f5f9; }
+
+.cat-btn.active {
+    background-color: var(--primary);
     color: white;
-    box-shadow: var(--shadow-md);
 }
+
+/* 메인 카드 영역 */
+.main-content { flex: 1; min-width: 0; }
 
 #card-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 20px;
 }
 
-/* 카드 UI */
+/* 카드 디자인 */
 .card {
     background: var(--card-bg);
-    padding: 24px;
-    border-radius: 16px;
+    padding: 22px;
+    border-radius: 12px;
     box-shadow: var(--shadow-sm);
     border: 1px solid var(--border);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
 }
 
-.ko-text {
-    font-size: 14px;
-    color: var(--text-muted);
-    margin-bottom: 8px;
-    font-weight: 500;
-}
-
-.cn-text {
-    font-size: 26px;
-    font-weight: 700;
-    color: var(--text-main);
-    margin-bottom: 4px;
-}
-
-.py-text {
-    font-size: 15px;
-    color: var(--primary);
-    margin-bottom: 24px;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-}
+.ko-text { font-size: 14px; color: var(--text-muted); margin-bottom: 6px; font-weight: 500; }
+.cn-text { font-size: 24px; font-weight: 700; color: var(--text-main); margin-bottom: 4px; }
+.py-text { font-size: 15px; color: var(--primary); margin-bottom: 20px; font-family: monospace; }
 
 .tts-btn {
-    padding: 12px;
+    padding: 10px;
     background-color: #eff6ff;
     color: var(--primary);
     border: none;
-    border-radius: 10px;
+    border-radius: 8px;
     cursor: pointer;
     font-weight: 600;
     font-size: 14px;
-    width: 100%;
     transition: background-color 0.2s;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 6px;
 }
 
-.tts-btn:hover {
-    background-color: #dbeafe;
+.tts-btn:hover { background-color: #dbeafe; }
+
+/* 모바일 반응형 처리 */
+@media (max-width: 768px) {
+    .app-layout {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .sidebar {
+        flex: auto;
+        width: 100%;
+        position: static;
+        max-height: none;
+        padding: 10px;
+    }
+    
+    #category-nav {
+        flex-direction: row;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 5px;
+    }
+    
+    .cat-btn { text-align: center; }
 }
