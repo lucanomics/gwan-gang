@@ -1,52 +1,66 @@
+// 15개 카테고리로 정밀 세분화된 비자 데이터베이스
 const db = {
     "공통 안내": [
-        { ko: "안녕하세요", cn: "你好", py: "Nǐ hǎo" },
-        { ko: "잠깐만 기다려요", cn: "等一下", py: "Děng yīxià" },
-        { ko: "앉으세요", cn: "坐一下", py: "Zuò yīxià" },
-        { ko: "번호표 뽑으세요", cn: "拿一下号", py: "Ná yīxià hào" },
-        { ko: "이쪽으로 오세요", cn: "来这边", py: "Lái zhèbiān" }
-    ],
-    "기본 서류 확인": [
         { ko: "여권 보여주세요", cn: "护照看一下", py: "Hùzhào kàn yīxià" },
-        { ko: "등록증(거소증) 보여주세요", cn: "登录证看一下", py: "Dēnglùzhèng kàn yīxià" },
-        { ko: "통합신청서 보여주세요", cn: "综合申请表看一下", py: "Zōnghé shēnqǐng biǎo kàn yīxià" },
-        { ko: "여기 사인하세요", cn: "这儿签字", py: "Zhèr qiānzì" },
-        { ko: "복사본 필요해요", cn: "要复印件", py: "Yào fùyìnjiàn" }
+        { ko: "등록증 보여주세요", cn: "登录证看一下", py: "Dēnglùzhèng kàn yīxià" },
+        { ko: "통합신청서 보여주세요", cn: "综合申请表看一下", py: "Zōnghé shēnqǐng biǎo kàn yīxià" }
     ],
-    "무사증/단기 (B-2/C-3)": [
-        { ko: "K-ETA 보여주세요", cn: "K-ETA 看一下", py: "K-ETA kàn yīxià" },
-        { ko: "왕복항공권 보여주세요", cn: "回程机票看一下", py: "Huíchéng jīpiào kàn yīxià" },
-        { ko: "숙소 예약증 보여주세요", cn: "酒店预订单看一下", py: "Jiǔdiàn yùdìngdān kàn yīxià" },
-        { ko: "단기비자는 연장 안 됩니다", cn: "短期签证不能延期", py: "Duǎnqī qiānzhèng bùnéng yánqī" }
-    ],
-    "유학/연수 (D-2/D-4)": [
+    "D-2 (유학)": [
         { ko: "재학증명서 보여주세요", cn: "在学证明看一下", py: "Zàixué zhèngmíng kàn yīxià" },
         { ko: "성적증명서 보여주세요", cn: "成绩单看一下", py: "Chéngjìdān kàn yīxià" },
-        { ko: "출석부 보여주세요", cn: "出勤表看一下", py: "Chūqín biǎo kàn yīxià" },
         { ko: "아르바이트 허가 신청서 줘", cn: "打工许可表给我", py: "Dǎgōng xǔkě biǎo gěi wǒ" }
     ],
-    "근로/취업 (E-9/E-8/E-7)": [
+    "D-4 (일반연수)": [
+        { ko: "재학증명서 보여주세요", cn: "在学证明看一下", py: "Zàixué zhèngmíng kàn yīxià" },
+        { ko: "출석부 보여주세요", cn: "出勤表看一下", py: "Chūqín biǎo kàn yīxià" }
+    ],
+    "D-10 (구직)": [
+        { ko: "졸업증명서 보여주세요", cn: "毕业证明看一下", py: "Bìyè zhèngmíng kàn yīxià" },
+        { ko: "구직활동계획서 보여주세요", cn: "求职计划书看一下", py: "Qiúzhí jìhuàshū kàn yīxià" }
+    ],
+    "E-7 (특정활동)": [
         { ko: "고용계약서 보여주세요", cn: "劳动合同看一下", py: "Láodòng hétong kàn yīxià" },
         { ko: "사업자등록증 보여주세요", cn: "营业执照看一下", py: "Yíngyè zhízhào kàn yīxià" },
+        { ko: "납세증명서 보여주세요", cn: "纳税证明看一下", py: "Nàshuì zhèngmíng kàn yīxià" }
+    ],
+    "E-8 (계절근로)": [
+        { ko: "표준근로계약서 보여주세요", cn: "标准劳动合同看一下", py: "Biāozhǔn láodòng hétong kàn yīxià" },
+        { ko: "무단이직은 불법입니다", cn: "擅自离职是违法的", py: "Shànzì lízhí shì wéifǎ de" }
+    ],
+    "E-9 (비전문취업)": [
+        { ko: "고용허가서 보여주세요", cn: "雇佣许可书看一下", py: "Gùyōng xǔkěshū kàn yīxià" },
         { ko: "근무처 변경 신청서 줘", cn: "变更工作申请表给我", py: "Biàngēng gōngzuò shēnqǐng biǎo gěi wǒ" }
     ],
-    "결혼/가족 (F-6/F-1-5)": [
-        { ko: "혼인관계증명서 보여주세요", cn: "婚姻关系证明看一下", py: "Hūnyīn guānxì zhèngmíng kàn yīxià" },
-        { ko: "가족관계증명서 보여주세요", cn: "家族关系证明看一下", py: "Jiāzú guānxì zhèngmíng kàn yīxià" },
-        { ko: "주민등록등본 보여주세요", cn: "居民户口簿看一下", py: "Jūmín hùkǒubù kàn yīxià" },
-        { ko: "비취업서약서에 서명하세요", cn: "不就业誓约书签字", py: "Bù jiùyè shìyuēshū qiānzì" }
+    "E-10 (선원취업)": [
+        { ko: "선원근로계약서 보여주세요", cn: "船员劳动合同看一下", py: "Chuányuán láodòng hétong kàn yīxià" },
+        { ko: "선원수첩 보여주세요", cn: "海员证看一下", py: "Hǎiyuánzhèng kàn yīxià" }
     ],
-    "거주/영주 (F-2/F-5)": [
-        { ko: "소득금액증명원 보여주세요", cn: "收入证明看一下", py: "Shōurù zhèngmíng kàn yīxià" },
+    "F-1-5 (가족초청)": [
+        { ko: "비취업서약서에 서명하세요", cn: "不就业誓约书签字", py: "Bù jiùyè shìyuēshū qiānzì" },
+        { ko: "절대 취업하면 안 됩니다", cn: "绝对不能就业", py: "Juéduì bùnéng jiùyè" }
+    ],
+    "F-2 (거주)": [
         { ko: "점수표 보여주세요", cn: "打分表看一下", py: "Dǎfēn biǎo kàn yīxià" },
+        { ko: "소득금액증명원 보여주세요", cn: "收入证明看一下", py: "Shōurù zhèngmíng kàn yīxià" }
+    ],
+    "F-4 (재외동포)": [
+        { ko: "거소증 보여주세요", cn: "居所证看一下", py: "Jūsuǒzhèng kàn yīxià" },
+        { ko: "단순노무 취업은 안 됩니다", cn: "不能从事单纯劳务", py: "Bùnéng cóngshì dānchún láowù" }
+    ],
+    "F-5 (영주)": [
+        { ko: "영주증 재발급 신청서 주세요", cn: "永久居留证补发申请表给我", py: "Yǒngjiǔ jūliúzhèng bǔfā shēnqǐng biǎo gěi wǒ" },
         { ko: "범죄경력증명서 보여주세요", cn: "无犯罪记录证明看一下", py: "Wú fànzuì jìlù zhèngmíng kàn yīxià" }
     ],
-    "지문/수납/마무리": [
-        { ko: "검지 손가락 올려요", cn: "手指放上去", py: "Shǒuzǐ fàng shàngqù" },
-        { ko: "카메라 보세요", cn: "看摄像头", py: "Kàn shèxiàngtóu" },
-        { ko: "수수료 내세요", cn: "交手续费", py: "Jiāo shǒuxùfèi" },
-        { ko: "다 됐어요", cn: "好了", py: "Hǎo le" },
-        { ko: "안녕히 가세요", cn: "慢走", py: "Màn zǒu" }
+    "F-6 (결혼이민)": [
+        { ko: "혼인관계증명서 보여주세요", cn: "婚姻关系证明看一下", py: "Hūnyīn guānxì zhèngmíng kàn yīxià" },
+        { ko: "가족관계증명서 보여주세요", cn: "家族关系证明看一下", py: "Jiāzú guānxì zhèngmíng kàn yīxià" },
+        { ko: "주민등록등본 보여주세요", cn: "居民户口簿看一下", py: "Jūmín hùkǒubù kàn yīxià" }
+    ],
+    "G-1 (기타/난민)": [
+        { ko: "난민인정신청서 주세요", cn: "难民认定申请书给我", py: "Nànmín rèndìng shēnqǐngshū gěi wǒ" }
+    ],
+    "H-2 (방문취업)": [
+        { ko: "취업교육 이수증 보여주세요", cn: "就业教育结业证看一下", py: "Jiùyè jiàoyù jiéyèzhèng kàn yīxià" }
     ]
 };
 
@@ -55,20 +69,18 @@ const cardContainer = document.getElementById('card-container');
 const searchInput = document.getElementById('search-input');
 let activeCategory = "공통 안내";
 
-// TTS 재생 기능
 function speak(text) {
     if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel(); 
+        window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'zh-CN'; 
-        utterance.rate = 0.9; 
+        utterance.lang = 'zh-CN';
+        utterance.rate = 0.9;
         window.speechSynthesis.speak(utterance);
     } else {
-        alert("이 브라우저에서는 음성 재생을 지원하지 않습니다.");
+        alert("브라우저에서 음성 재생을 지원하지 않습니다.");
     }
 }
 
-// 단일 카드 생성 함수
 function createCard(item) {
     const card = document.createElement('div');
     card.className = 'card';
@@ -78,27 +90,21 @@ function createCard(item) {
             <div class="cn-text">${item.cn}</div>
             <div class="py-text">${item.py}</div>
         </div>
-        <button class="tts-btn" onclick="speak('${item.cn}')">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-            발음 듣기
-        </button>
+        <button class="tts-btn" onclick="speak('${item.cn}')">🔊 발음 듣기</button>
     `;
     cardContainer.appendChild(card);
 }
 
-// 선택된 카테고리 렌더링
 function renderCards(category) {
     cardContainer.innerHTML = '';
     const items = db[category];
     items.forEach(item => createCard(item));
 }
 
-// 검색 기능 로직
 searchInput.addEventListener('input', (e) => {
     const term = e.target.value.toLowerCase().trim();
     cardContainer.innerHTML = '';
     
-    // 검색어가 없으면 현재 활성화된 카테고리로 복구
     if (!term) {
         renderCards(activeCategory);
         document.querySelectorAll('.cat-btn').forEach(btn => {
@@ -107,10 +113,8 @@ searchInput.addEventListener('input', (e) => {
         return;
     }
 
-    // 검색 시 모든 버튼 선택 해제
     document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
 
-    // DB 전체에서 검색어 포함 객체 필터링 (한국어, 병음, 한자)
     const allItems = Object.values(db).flat();
     const results = allItems.filter(item => 
         item.ko.includes(term) || 
@@ -118,20 +122,18 @@ searchInput.addEventListener('input', (e) => {
         item.cn.includes(term)
     );
 
-    // 중복 제거 후 렌더링
     const uniqueResults = Array.from(new Set(results.map(a => a.ko)))
         .map(ko => {
             return results.find(a => a.ko === ko)
         });
 
     if (uniqueResults.length === 0) {
-        cardContainer.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #6c757d; padding: 40px 0;">검색 결과가 없습니다.</div>';
+        cardContainer.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #64748b; padding: 40px 0;">검색 결과가 없습니다.</div>';
     } else {
         uniqueResults.forEach(item => createCard(item));
     }
 });
 
-// 초기화
 function init() {
     const categories = Object.keys(db);
     categories.forEach((cat, index) => {
@@ -141,7 +143,6 @@ function init() {
         if (index === 0) btn.classList.add('active');
         
         btn.onclick = () => {
-            // 검색창 초기화
             searchInput.value = '';
             activeCategory = cat;
             document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
