@@ -1,4 +1,3 @@
-// 검색 기능 강화를 위해 실무 표현이 대폭 추가된 비자 데이터베이스 (B-2, C-3 영구 제외)
 const db = {
     "공통 안내": [
         { ko: "여권 보여주세요", cn: "护照看一下", py: "Hùzhào kàn yīxià" },
@@ -86,6 +85,8 @@ const db = {
 const navContainer = document.getElementById('category-nav');
 const cardContainer = document.getElementById('card-container');
 const searchInput = document.getElementById('search-input');
+const titleElement = document.getElementById('current-category-title');
+const countElement = document.getElementById('result-count');
 let activeCategory = "공통 안내";
 
 function speak(text) {
@@ -104,19 +105,28 @@ function createCard(item) {
     const card = document.createElement('div');
     card.className = 'card';
     card.innerHTML = `
-        <div>
+        <div class="card-content">
             <div class="ko-text">${item.ko}</div>
             <div class="cn-text">${item.cn}</div>
             <div class="py-text">${item.py}</div>
         </div>
-        <button class="tts-btn" onclick="speak('${item.cn}')">🔊 발음 듣기</button>
+        <button class="tts-btn" onclick="speak('${item.cn}')">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+            발음 듣기
+        </button>
     `;
     cardContainer.appendChild(card);
+}
+
+function updateHeaderInfo(title, count) {
+    titleElement.textContent = title;
+    countElement.textContent = `총 ${count}개의 표현`;
 }
 
 function renderCards(category) {
     cardContainer.innerHTML = '';
     const items = db[category];
+    updateHeaderInfo(category, items.length);
     items.forEach(item => createCard(item));
 }
 
@@ -146,8 +156,10 @@ searchInput.addEventListener('input', (e) => {
             return results.find(a => a.ko === ko)
         });
 
+    updateHeaderInfo(`검색 결과: "${term}"`, uniqueResults.length);
+
     if (uniqueResults.length === 0) {
-        cardContainer.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #64748b; padding: 40px 0;">검색 결과가 없습니다.</div>';
+        cardContainer.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #64748b; padding: 60px 0; font-size: 16px;">검색 결과가 없습니다. 다른 키워드로 검색해보세요.</div>';
     } else {
         uniqueResults.forEach(item => createCard(item));
     }
